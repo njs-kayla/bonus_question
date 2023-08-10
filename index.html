@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <div class="container">
+            <input type="file" @change="handleFileChange">
+            <img v-show="imgUrl" :src="imgUrl" :style="{ backgroundColor: backgroundColor }">
+            <div class="button_group">
+                <button v-for="(item, index) in color" :style="{ backgroundColor: item }" :key="index" @click="getColor(item)">
+                    {{item}}
+                </button>
+            </div>
+        </div>
+    </div>
+    <script type="module">
+        import { createApp } from "https://unpkg.com/vue@3.2.31/dist/vue.esm-browser.prod.js";
+    
+        createApp({
+            data() {
+                return {
+                    imgUrl: '',
+                    selectedFile: null,
+                    color: ['red', 'blue', 'green', 'yellow', 'black', 'orange', 'purple', 'pink', 'brown', 'gray'],
+                    backgroundColor: ''
+                }
+            },
+            methods: {
+                handleFileChange(event) {
+                    const file = event.target.files[0];
+                    this.selectedFile = file;
+                    this.imgUrl = URL.createObjectURL(file);
+                },
+                getColor(color) {
+                    this.backgroundColor = color;
+                }
+            },
+        }).mount('#app')
+    </script>
+    </body>
+    </html>
+<style>
+    .container{
+        width: 100%;
+        background-color: antiquewhite;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    input{
+        padding: 10px;
+        margin: 10px 0;
+        border: none;
+        border-radius: 20px;
+        outline: none;
+    }
+    img {
+        border-radius: 50%;
+        margin: auto;
+        width: 300px;
+        height: 300px;
+        object-position: center;
+        object-fit: cover;
+    }
+    button{
+        width: 70px;
+        text-align: center;
+        border-radius: 20px;
+        margin: 10px;
+        padding: 10px 0;
+        border: none;
+        cursor: pointer;
+        color: white;
+        font-weight: bold;
+        letter-spacing: 2px;
+    }
+</style>
